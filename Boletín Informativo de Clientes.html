@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Sistema Comercial de EGESUR</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4; color: #333;
+    }
+    .top-bar {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px;
+      background-color: #ffffff; border-bottom: 1px solid #ddd;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; z-index: 1000;
+    }
+    .top-left {
+      display: flex; align-items: center; gap: 18px;
+      margin-left: 25px;
+    }
+    .logo-egesur img { height: 40px; }
+    .system-title {
+      font-size: 14px; font-weight: 600; color: #333;
+      margin-top: 10px; margin-left: 20px;
+    }
+    .top-right { font-size: 11px; color: #555; display: flex; align-items: center; gap: 10px; }
+    .layout { display: flex; margin-top: 52px; height: calc(100vh - 52px); }
+    .sidebar {
+      width: 200px; background-color: #236dab; color: #ffffff;
+      display: flex; flex-direction: column; border-right: 1px solid #1d5a8f;
+    }
+    .menu-list { list-style: none; width: 100%; }
+    .menu-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 12px; font-size: 12px; cursor: pointer;
+      border-bottom: 1px solid #1d5a8f; transition: 0.15s;
+    }
+    .menu-item:hover { background-color: #1f5f96; }
+    .menu-item.active { background-color: #1b578a; }
+    .menu-item-left { display: flex; align-items: center; gap: 8px; }
+    .menu-icon { width: 18px; text-align: center; font-size: 12px; opacity: 0.9; }
+    .menu-label { white-space: nowrap; }
+    .menu-arrow { font-size: 11px; opacity: 0.8; }
+    .main-content {
+      flex: 1; background-color: #ffffff; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .content-header {
+      padding: 10px 20px 0 20px; border-bottom: 1px solid #ddd;
+    }
+    .tab-welcome {
+      display: inline-block; padding: 5px 18px; font-size: 11px; font-weight: 600;
+      border: 1px solid #1b578a; border-bottom: none; border-radius: 3px 3px 0 0;
+      color: #1b578a; background-color: #ffffff;
+    }
+    .content-body {
+      flex: 1; padding: 0 20px 20px 20px; background-color: #f4f4f4;
+    }
+    .report-container {
+      width: 100%; height: 100%; border: 1px solid #ddd;
+      background-color: #ffffff; overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+    .report-frame { width: 100%; height: 100%; border: none; }
+</style>
+</head>
+
+<body>
+
+<header class="top-bar">
+  <div class="top-left">
+    <div class="logo-egesur">
+      <img src="https://github.com/comercializacionegs/boletinclientes/blob/main/LogoEgesur.png?raw=1">
+    </div>
+    <div class="system-title">Boletín Informativo de Clientes</div>
+  </div>
+  <div class="top-right"><span id="fecha-hoy"></span></div>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+<ul class="menu-list">
+<li class="menu-item active" data-report="https://app.powerbi.com/view?r=eyJrIjoiZmNlZWNmMTQtMGJhNi00ZTA3LTlhMmMtZjQxNGM3YWEzMDQwIiwidCI6IjBkYWIxZDk1LTJhMDgtNDI0My1hN2U1LWI4OWVkM2JiYzBlNyJ9">
+  <div class="menu-item-left"><span class="menu-icon">📈</span><span class="menu-label">Electrosur</span></div><span class="menu-arrow">&gt;</span>
+</li>
+
+<li class="menu-item" data-report="https://app.powerbi.com/view?r=eyJrIjoiZTA3MDgwZDItY2NkYS00ODdlLWFiY2QtYjlmOGVhNDQ5Yzg0IiwidCI6IjBkYWIxZDk1LTJhMDgtNDI0My1hN2U1LWI4OWVkM2JiYzBlNyJ9">
+  <div class="menu-item-left"><span class="menu-icon">📈</span><span class="menu-label">Pluz Energía Perú</span></div><span class="menu-arrow">&gt;</span>
+</li>
+
+<li class="menu-item" data-report="https://app.powerbi.com/view?r=eyJrIjoiNzY3ZDZmZmItNTZiMi00OGYxLTgyNGItM2E5YjQyNTY2MzdiIiwidCI6IjBkYWIxZDk1LTJhMDgtNDI0My1hN2U1LWI4OWVkM2JiYzBlNyJ9&pageName=2b5a0716d85822e0878a">
+  <div class="menu-item-left"><span class="menu-icon">📈</span><span class="menu-label">Exc Trading</span></div><span class="menu-arrow">&gt;</span>
+</li>
+
+<li class="menu-item" data-report="https://app.powerbi.com/view?r=eyJrIjoiNGIzMjFlOTUtMjhiMy00M2E4LWEyOGQtYjBlODY4YjU4YmNlIiwidCI6IjBkYWIxZDk1LTJhMDgtNDI0My1hN2U1LWI4OWVkM2JiYzBlNyJ9&pageName=2b5a0716d85822e0878a">
+  <div class="menu-item-left"><span class="menu-icon">📈</span><span class="menu-label">Luz del Sur</span></div><span class="menu-arrow">&gt;</span>
+</li>
+
+<li class="menu-item" data-report="https://app.powerbi.com/view?r=eyJrIjoiY2Q3ZGQ3MDAtODBhNS00MGY0LWI3YWQtYmRkZTczNjVhOTcxIiwidCI6IjBkYWIxZDk1LTJhMDgtNDI0My1hN2U1LWI4OWVkM2JiYzBlNyJ9">
+  <div class="menu-item-left"><span class="menu-icon">📈</span><span class="menu-label">Propesur</span></div><span class="menu-arrow">&gt;</span>
+</li>
+</ul>
+
+<div style="padding:20px 10px; text-align:center;">
+  <img id="qr-code" src="" style="width:160px; height:160px; object-fit:contain; margin-top:20px;">
+</div>
+
+</aside>
+
+<main class="main-content">
+<div class="content-header"><span class="tab-welcome">BIENVENIDO</span></div>
+<div class="content-body">
+<div class="report-container">
+<iframe allowfullscreen="true" class="report-frame" id="reportFrame"
+src="https://app.powerbi.com/view?r=eyJrIjoiZmNlZWNmMTQtMGJhNi00ZTA3LTlhMmMtZjQxNGM3YWEzMDQwIiwidCI6IjBkYWIxZDk1LTJhMDgtNDI0My1hN2U1LWI4OWVkM2JiYzBlNyJ9">
+</iframe>
+</div></div></main></div>
+
+<script>
+document.querySelectorAll(".menu-item").forEach(item => {
+  item.addEventListener("click", function () {
+    document.getElementById("reportFrame").src = this.getAttribute("data-report");
+    document.querySelectorAll(".menu-item").forEach(m => m.classList.remove("active"));
+    this.classList.add("active");
+    actualizarQR(this.querySelector(".menu-label").textContent.trim());
+  });
+});
+
+const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
+document.getElementById("fecha-hoy").textContent = meses[new Date().getMonth()] + " " + new Date().getFullYear();
+
+const qrMap = {
+  "Electrosur": "https://github.com/comercializacionegs/boletinclientes/blob/main/QR%20-%20BOLETIN%20CLIENTES%20-%20Electrosur.jpeg?raw=1",
+  "Pluz Energía Perú": "https://github.com/comercializacionegs/boletinclientes/blob/main/QR%20-%20BOLETIN%20CLIENTES%20-%20Enel%20Distribuci%C3%B3n%20Per%C3%BA.png?raw=1",
+  "Exc Trading": "https://github.com/comercializacionegs/boletinclientes/blob/main/QR%20-%20BOLETIN%20CLIENTES%20-%20Exctrading.png?raw=1",
+  "Luz del Sur": "https://github.com/comercializacionegs/boletinclientes/blob/main/QR%20-%20BOLETIN%20CLIENTES%20-%20Luz%20del%20Sur.png?raw=1",
+  "Propesur": "https://github.com/comercializacionegs/boletinclientes/blob/main/QR%20-%20BOLETIN%20CLIENTES%20-%20Propesur.png?raw=1"
+};
+
+function actualizarQR(label){
+  var img = document.getElementById("qr-code");
+  img.src = qrMap[label] || "";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  var active = document.querySelector(".menu-item.active .menu-label");
+  if (active) actualizarQR(active.textContent.trim());
+});
+</script>
+
+</body>
+</html>
